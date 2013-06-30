@@ -1,7 +1,7 @@
 function Colpo(posx, posy)
 {
     var img = document.createElement('img');
-    img.src = '/images/colpo.png';
+    img.src = 'images/colpo.png';
     img.style.position = 'absolute';
     img.style.left = posx;
     img.style.top = posy;

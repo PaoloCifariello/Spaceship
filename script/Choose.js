@@ -31,7 +31,7 @@ function ClickShip(obj)
     
     var background = document.createElement('img');
     background.alt = 'Could not display background';
-    background.src = '/images/background.jpg';
+    background.src = 'images/background.jpg';
     background.class = 'background';
 
     document.body.appendChild(background);
