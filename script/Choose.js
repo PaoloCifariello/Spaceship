@@ -6,8 +6,18 @@ function Update()
 {
     for  (i in colpi)
     {
-        colpi[i].obj.style.top = ( parseInt(colpi[i].obj.style.top) + colpi[i].vy ) + 'px';
-        colpi[i].obj.style.left = ( parseInt(colpi[i].obj.style.left) + colpi[i].vx ) + 'px';
+        var newposy = parseInt(colpi[i].obj.style.top) + colpi[i].vy;
+
+        if (newposy < -10) {
+            var toRemove = colpi[i].obj;
+            document.body.removeChild(toRemove);
+
+            colpi.splice(i, 1);
+        }
+        else {
+            colpi[i].obj.style.top = newposy + 'px';
+            colpi[i].obj.style.left = (parseInt(colpi[i].obj.style.left) + colpi[i].vx) + 'px';
+        }
     }    
 
 }
@@ -29,6 +39,8 @@ function Click(obj)
     background.src = '/images/background.jpg';
     background.class = 'background';
 
+    obj.onclick = "";
+
     document.body.appendChild(background);
     document.body.appendChild(obj);
 
@@ -42,6 +54,7 @@ function KeyDown(e)
 {
     var vx = 5;
     var vy = 5;
+
     var keyCode = e.keyCode;
 
     if (keyCode == 37) 
