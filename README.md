@@ -9,3 +9,5 @@ This is a simple space game written in Javascript.
 To use it just fork ad open index.html.
 
 contributions are highly welcome.
+
+try it at www.sbiriguda.altervista.org
