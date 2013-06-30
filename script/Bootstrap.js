@@ -12,8 +12,22 @@ function Colpo(posx, posy)
     this.posy = posy;
     this.obj = img;
     this.vx = 0;
-    this.vy = -( ( Math.random() * 5 ) + 1 );
+    this.vy = -( ( Math.random() * 4 ) + 1 );
     
+}
+
+function InitializeShip(ship)
+{
+    ship.id = "char";
+    ship.style.left = "600px";
+    ship.style.top = "600px";
+    ship.style.margin = "0px";
+    ship.style.width = '150px';
+    ship.style.height = '100px';
+    
+    ship.onclick = "";
+    ship.onmouseover = "";
+    ship.onmouseout = "";
 }
 
 document.title = "Flight Game"

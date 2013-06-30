@@ -23,23 +23,16 @@ function Update()
 }
 
 /* When we click on the ship */
-function Click(obj) 
+function ClickShip(obj) 
 {
     document.body.innerHTML = "";
 
-    obj.id = "char";
-    obj.style.left = "400px";
-    obj.style.top = "400px";
-    obj.style.margin = "0px";
-    obj.style.width = '150px';
-    obj.style.height = '100px';
-
+    InitializeShip(obj);
+    
     var background = document.createElement('img');
     background.alt = 'Could not display background';
     background.src = '/images/background.jpg';
     background.class = 'background';
-
-    obj.onclick = "";
 
     document.body.appendChild(background);
     document.body.appendChild(obj);

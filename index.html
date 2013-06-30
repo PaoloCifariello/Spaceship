@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="Style.css"></link>
     <script src="script/Bootstrap.js"></script>
     <script src="script/Choose.js"></script>
+    <script src="script/Mouse.js"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta charset="utf-8" />
 
@@ -17,10 +18,18 @@
     <br>
     
     <div>
-        <div id="s1" class="Scelta"><img class="Scelta" alt="Boscata" src="images/sship1.png" onclick="Click(this);"></img></div>
-        <div id="s2" class="Scelta"><img class="Scelta" alt="Boscata" src="images/sship2.png" onclick="Click(this);"></img></div>
-        <div id="s3" class="Scelta"><img class="Scelta" alt="Boscata" src="images/sship3.png" onclick="Click(this);"></img></div>
-        <div id="s4" class="Scelta"><img class="Scelta" alt="Boscata" src="images/sship4.png" onclick="Click(this);"></img></div>
+        <div id="blueShip" class="Scelta">
+            <img class="Scelta" alt="Boscata" src="images/sship1.png" onmouseover="Over(this)" onmouseout="notOver(this)" onclick="ClickShip(this);"></img>
+        </div>
+        <div id="redShip" class="Scelta">
+            <img class="Scelta" alt="Boscata" src="images/sship2.png" onmouseover="Over(this)" onmouseout="notOver(this)" onclick="ClickShip(this);"></img>
+        </div>
+        <div id="yellowShip" class="Scelta">
+            <img class="Scelta" alt="Boscata" src="images/sship3.png" onmouseover="Over(this)" onmouseout="notOver(this)" onclick="ClickShip(this);"></img>
+        </div>
+        <div id="blackShip" class="Scelta">
+            <img class="Scelta" alt="Boscata" src="images/sship4.png" onmouseover="Over(this)" onmouseout="notOver(this)" onclick="ClickShip(this);"></img>
+        </div>
     </div>
     
 </body>
