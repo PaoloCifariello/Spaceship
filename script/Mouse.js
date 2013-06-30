@@ -6,6 +6,6 @@ function Over(obj)
 
 function notOver(obj)
 {
-    obj.style.width = '150px';
-    obj.style.height = '100px';
+    obj.style.width = '180px';
+    obj.style.height = '120px';
 }
