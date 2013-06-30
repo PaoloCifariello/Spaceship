@@ -10,4 +10,4 @@ To use it just fork ad open index.html.
 
 contributions are highly welcome.
 
-try it at www.sbiriguda.altervista.org
+try it at www.sbiriguda.altervista.org/game
