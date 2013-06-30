@@ -1,11 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-
     <link rel="stylesheet" href="Style.css"></link>
-    <script src="script/Bootstrap.js"></script>
-    <script src="script/Choose.js"></script>
-    <script src="script/Mouse.js"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta charset="utf-8" />
 
@@ -14,23 +10,36 @@
 
     <div id="mainChar" class="char"></div>
 
-    <div class="chooseTitle">Scegli la navicella</div>
+    <div id="chooseTitle" class="chooseTitle"></div>
     <br>
     
-    <div>
+    <ul>
+        <li>
         <div id="blueShip" class="Scelta">
             <img class="Scelta" alt="Boscata" src="images/sship1.png" onmouseover="Over(this)" onmouseout="notOver(this)" onclick="ClickShip(this);"></img>
         </div>
+        </li>
+        <li>
         <div id="redShip" class="Scelta">
             <img class="Scelta" alt="Boscata" src="images/sship2.png" onmouseover="Over(this)" onmouseout="notOver(this)" onclick="ClickShip(this);"></img>
         </div>
+        </li>
+        <li>
         <div id="yellowShip" class="Scelta">
             <img class="Scelta" alt="Boscata" src="images/sship3.png" onmouseover="Over(this)" onmouseout="notOver(this)" onclick="ClickShip(this);"></img>
         </div>
+        </li>
+        <li>
         <div id="blackShip" class="Scelta">
             <img class="Scelta" alt="Boscata" src="images/sship4.png" onmouseover="Over(this)" onmouseout="notOver(this)" onclick="ClickShip(this);"></img>
         </div>
-    </div>
+        </li>
+    </ul>
     
 </body>
 </html>
+
+<script src="script/Bootstrap.js"></script>
+<script src="script/Choose.js"></script>
+<script src="script/Mouse.js"></script>
+<script src="script/Update.js"></script>

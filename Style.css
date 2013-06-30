@@ -50,8 +50,18 @@ html, body {
      overflow: hidden
 }
 
-#char {
+ul {
     
+    
+    display: block;
+}
+
+li {
+    
+    list-style-type: none;
+}
+
+#char {
     position: absolute;
 }
 
