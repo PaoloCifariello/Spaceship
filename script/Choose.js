@@ -18,10 +18,13 @@ function ClickShip(obj)
         document.body.appendChild(Characters.c1);
         document.body.appendChild(Characters.c2);
 
+        Show(Characters.c1);
+        Show(Characters.c2);
+
         document.addEventListener("keydown", KeyDown, false);
         document.addEventListener("keyup", KeyUp, false);
 
-        setInterval(Update, 10);
+        setInterval(Update, 20);
     }
 
     else

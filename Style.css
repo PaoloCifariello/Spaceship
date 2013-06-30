@@ -36,10 +36,11 @@
 
 .Scelta {
     position: relative;
-    height: 100px;
-    width: 150px;
+    height: 80px;
+    width: 160px;
     float: left;
-    margin-left: 100px;
+    margin-left: 85px;
+    left: -80px;
 }
 
 html, body {
