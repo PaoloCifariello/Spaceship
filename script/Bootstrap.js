@@ -1,4 +1,3 @@
-
 function Colpo(posx, posy, id) {
     var img = document.createElement('img');
     img.src = 'images/colpo.png';
@@ -13,8 +12,15 @@ function Colpo(posx, posy, id) {
     this.obj = img;
     this.id = id;
     this.vx = 0;
-    if (id == 1) this.vy = -((Math.random() * 4) + 2);
-    else this.vy = (Math.random() * 4) + 2;
+    if (id == 1) this.vy = -((Math.random() * 4) + 4);
+    else this.vy = (Math.random() * 4) + 4;
 }
-    document.title = "Flight Game"
-    document.getElementById('chooseTitle').innerText = 'Scegli la navicella 1:';
+
+function Character(ship){
+
+    this.ship = ship;
+    this.life = 100;
+}
+
+document.title = "Flight Game"
+document.getElementById('chooseTitle').innerText = 'Player 1 scegli la navicella:\nSpostati con le frecce e spara con P';

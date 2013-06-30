@@ -52,13 +52,10 @@ html, body {
 }
 
 ul {
-    
-    
     display: block;
 }
 
-li {
-    
+li {  
     list-style-type: none;
 }
 
@@ -66,12 +63,7 @@ li {
     position: absolute;
 }
 
-.mainChar {
+.life {
     
-    
-    
-}
-
-.s1 {
-    
+    color: #f00;
 }

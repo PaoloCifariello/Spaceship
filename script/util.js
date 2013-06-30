@@ -62,6 +62,7 @@ function InitializeShip(ship, id) {
     ship.onmouseout = "";
 }
 
+/* controlla se ball collide con ship */
 function Collides ( ball, ship)
 {
     var posxBall = parseInt(ball.obj.style.left);
@@ -78,4 +79,58 @@ function Collides ( ball, ship)
         return true;
 
     return false; 
+}
+
+/* Rimuove il colpo di indice index dall'array array */
+function remove(array, index)
+{
+    var toRemove = array[index].obj;
+    document.body.removeChild(toRemove);
+    array.splice(index, 1);
+}
+
+/* Initialize main windows */
+function InitializeScenario()
+{
+
+        var life1 = document.createElement('p');
+        var life2 = document.createElement('p');
+
+        life2.id = 'l1';
+        life1.id = 'l2';
+        
+        life1.className += 'life';
+        life2.className += 'life';
+
+        life1.innerText = 'LIFE: 100';
+        life2.innerText = 'LIFE: 100';
+
+        life1.style.position = 'absolute';
+        life2.style.position = 'absolute';
+
+        life1.style.left = '0px';
+        life2.style.left = '0px';
+
+        life1.style.top = '0px';
+        life2.style.top = (GetHeight() - 50) + 'px';
+        /* creates background */   
+        var background = document.createElement('img');
+        background.alt = 'Could not display background';
+        background.src = 'images/background.jpg';
+        background.class = 'background';
+
+        document.body.appendChild(background);
+
+        /* append and show ship images */
+        document.body.appendChild(Characters.c1.ship);
+        document.body.appendChild(Characters.c2.ship);
+
+        document.body.appendChild(life1);
+        document.body.appendChild(life2);
+
+        Show(Characters.c1.ship);
+        Show(Characters.c2.ship);
+
+        document.addEventListener("keydown", KeyDown, false);
+        document.addEventListener("keyup", KeyUp, false);
 }
