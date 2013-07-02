@@ -118,6 +118,8 @@ function InitializeScenario()
         background.alt = 'Could not display background';
         background.src = 'images/background.jpg';
         background.class = 'background';
+        background.style.width = GetWidth() + 'px';
+        background.style.height = GetHeight() + 'px';
 
         document.body.appendChild(background);
 
@@ -133,4 +135,38 @@ function InitializeScenario()
 
         document.addEventListener("keydown", KeyDown, false);
         document.addEventListener("keyup", KeyUp, false);
+}
+
+function AddCounter()
+{
+    var counter = document.createElement('script');
+    counter.type = 'text/javascript';
+    counter.src = 'http://www.altervista.org/js_tags/contatore.js';
+    document.appendChild('counter');    
+}
+
+function SetWinner(id)
+{
+    clearInterval(Timer);
+    colpi = {};
+
+    document.body.innerHTML = "";
+
+    if ( id == 1 )
+	    var winner = Characters.c1.ship;
+	    else var winner = Characters.c2.ship;
+	    
+    document.write('Il vincitore è Player' + id + '!' + '<br>' + 'con ' + winner.id);
+
+    document.body.appendChild(winner);
+   
+    winner.style.left = '100px';
+    winner.style.top = '100px';
+	
+    document.write('<br>');
+    document.write('<br>');
+
+    document.write('Partite Giocate: ');
+    
+    document.write('<script type="text/javascript" src="http://www.altervista.org/js_tags/contatore.js"></script>');
 }

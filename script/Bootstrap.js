@@ -21,6 +21,3 @@ function Character(ship){
     this.ship = ship;
     this.life = 100;
 }
-
-document.title = "Flight Game"
-document.getElementById('chooseTitle').innerText = 'Player 1 scegli la navicella:\nSpostati con le frecce e spara con P';

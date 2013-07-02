@@ -30,17 +30,8 @@ function Update() {
                 document.getElementById('l2').innerText = "LIFE: " + Characters.c2.life;
                 remove(colpi, i);
                 
-                if (Characters.c2.life == 0) {
-                    document.body.innerHTML = "";
-                    var win = document.createElement('p');
-                    win.innerHTML = 'Il vincitore è Player 1!';
-                    Characters.c1.ship.style.left = '100px';
-                    Characters.c1.ship.style.top = '100px';
-                    document.body.appendChild(win);
-                    document.body.appendChild(Characters.c1.ship);
-                    colpi = {};
-                    clearInterval(Timer);
-                }
+                if (Characters.c2.life == 0)
+                    SetWinner(1);
             }
 
             /* Collides First Ship */
@@ -49,17 +40,8 @@ function Update() {
                 document.getElementById('l1').innerText = "LIFE: " + Characters.c1.life;
                 remove(colpi, i);
 
-                if (Characters.c1.life == 0) {
-                    document.body.innerHTML = "";
-                    var win = document.createElement('p');
-                    win.innerHTML = 'Il vincitore è Player 2!';
-                    Characters.c2.ship.style.left = '100px';
-                    Characters.c2.ship.style.top = '100px';
-                    document.body.appendChild(win);
-                    document.body.appendChild(Characters.c2.ship);
-                    colpi = {};
-                    clearInterval(Timer);
-                }
+                if (Characters.c1.life == 0)
+                    SetWinner(2);
             }
 
         }
@@ -77,7 +59,8 @@ function UpdateInput() {
     /* First Ship */
     if (pressedKeys[37] == true) {
         /* left arrow */
-        Characters.c1.ship.style.left = parseInt(Characters.c1.ship.style.left) - vx + 'px';
+        var oldx = parseInt(Characters.c1.ship.style.left);
+        if (oldx >= 0) Characters.c1.ship.style.left = ( oldx - vx ) + 'px';
     }
 
     if (pressedKeys[38] == true) {
@@ -86,9 +69,9 @@ function UpdateInput() {
     }
 
     if (pressedKeys[39] == true) {
-        /* right arrow */
-        Characters.c1.ship.style.left = parseInt(Characters.c1.ship.style.left) + vx + 'px';
-    }
+        /* right arrow */      
+        var oldx = parseInt(Characters.c1.ship.style.left);
+        if (oldx <= ( GetWidth() - parseInt(Characters.c1.ship.style.width) ) ) Characters.c1.ship.style.left = ( oldx + vx ) + 'px';    }
 
     if (pressedKeys[40] == true) {
         /* down arrow */
@@ -104,7 +87,8 @@ function UpdateInput() {
     /* WASD SpaceBar */
     if (pressedKeys[65] == true) {
         /* left arrow */
-        Characters.c2.ship.style.left = parseInt(Characters.c2.ship.style.left) - vx + 'px';
+        var oldx = parseInt(Characters.c2.ship.style.left);
+        if (oldx >= 0) Characters.c2.ship.style.left = ( oldx - vx ) + 'px';
     }
 
     if (pressedKeys[87] == true) {
@@ -114,7 +98,8 @@ function UpdateInput() {
 
     if (pressedKeys[68] == true) {
         /* right arrow */
-        Characters.c2.ship.style.left = parseInt(Characters.c2.ship.style.left) + vx + 'px';
+        var oldx = parseInt(Characters.c2.ship.style.left);
+        if (oldx <= ( GetWidth() - parseInt(Characters.c2.ship.style.width) ) ) Characters.c2.ship.style.left = ( oldx + vx ) + 'px';
     }
 
     if (pressedKeys[83] == true) {
