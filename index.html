@@ -1,61 +1,69 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="Style.css"></link>
+    <link rel="stylesheet" href="style.css"></link>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta charset="utf-8" />
     <title>Flight Game</title>
 
+    <script src="lib/jquery-1.10.1.min.js"></script>
+    <script src="script/init.js"></script>
+    <script src="script/ClassDef.js"></script>
     <script src="script/util.js"></script>
-    <script src="script/Bootstrap.js"></script>
     <script src="script/Update.js"></script>
-    <script src="script/Choose.js"></script>
     <script src="script/Input.js"></script>
-
 </head>
 <body>
-
     <div id="mainChar" class="char"></div>
-
-    <div id="chooseTitle" class="chooseTitle">Player 1 scegli la navicella:<br>Spostati con le frecce e spara con P</div>
+    <div id="chooseTitle" class="chooseTitle">
+        Player 1 scegli la navicella:<br>Spostati con le frecce e spara con P
+    </div>
     <br>
-    
+        
     <ul>
-        <li>
-        <div class="Scelta">
-            <img id="Q-uore" class="Scelta" alt="Boscata" src="images/sship1.png" onmouseover="Over(this)" onmouseout="notOver(this)" onclick="ClickShip(this);"></img>
+         <li>
+         <div class="Scelta">
+            <img id="0" class="SceltaImg" alt="Boscata" src="images/ship0.png" onmouseover="Over(this);"
+                 onmouseout="notOver(this);" onclick="ClickShip(this);"
+                     width = "140px" height="75px"></img>
         </div>
         </li>
         <li>
         <div class="Scelta">
-            <img id="Sharingo" class="Scelta" alt="Boscata" src="images/sship2.png" onmouseover="Over(this)" onmouseout="notOver(this)" onclick="ClickShip(this);"></img>
+            <img id="1" class="SceltaImg" alt="Boscata" src="images/ship1.png" onmouseover="Over(this)"
+                 onmouseout="notOver(this)" onclick="ClickShip(this);"
+                    width = "140px" height="75px"></img></img>
         </div>
         </li>
         <li>
         <div class="Scelta">
-            <img id="Alienship" class="Scelta" alt="Boscata" src="images/sship3.png" onmouseover="Over(this)" onmouseout="notOver(this)" onclick="ClickShip(this);"></img>
+            <img id="2" class="SceltaImg" alt="Boscata" src="images/ship2.png" onmouseover="Over(this)"
+                 onmouseout="notOver(this)" onclick="ClickShip(this);"
+                    width = "140px" height="75px"></img></img></img>
         </div>
         </li>
         <li>
         <div class="Scelta">
-            <img id="Solbadguy" class="Scelta" alt="Boscata" src="images/sship4.png" onmouseover="Over(this)" onmouseout="notOver(this)" onclick="ClickShip(this);"></img>
+            <img id="3" class="SceltaImg" alt="Boscata" src="images/ship3.png" onmouseover="Over(this)"
+                 onmouseout="notOver(this)" onclick="ClickShip(this);"
+                    width = "140px" height="75px"></img></img></img>
         </div>
         </li>
         <li>
         <div class="Scelta">
-            <img id="Starship" class="Scelta" alt="Boscata" src="images/sship5.png" onmouseover="Over(this)" onmouseout="notOver(this)" onclick="ClickShip(this);"></img>
+            <img id="4" class="SceltaImg" alt="Boscata" src="images/ship4.png" onmouseover="Over(this)"
+                 onmouseout="notOver(this)" onclick="ClickShip(this);"
+                    width = "140px" height="75px"></img></img></img>
         </div>
         </li>
         <li>
         <div class="Scelta">
-            <img id="SirPente" class="Scelta" alt="Boscata" src="images/sship6.png" onmouseover="Over(this)" onmouseout="notOver(this)" onclick="ClickShip(this);"></img>
-        </div>
-        </li>
-        <li>
-        <div class="Scelta">
-            <img id="NimRod" class="Scelta" alt="Boscata" src="images/sship7.png" onmouseover="Over(this)" onmouseout="notOver(this)" onclick="ClickShip(this);"></img>
+            <img id="5" class="SceltaImg" alt="Boscata" src="images/ship5.png" onmouseover="Over(this)"
+                 onmouseout="notOver(this)" onclick="ClickShip(this);"
+                    width = "140px" height="75px"></img></img></img>
         </div>
         </li>
     </ul>
 </body>
+
 </html>

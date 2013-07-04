@@ -1,6 +1,3 @@
-/* Ships */
-var Characters = { c1: null, c2: null};
-
 var colpi = new Array();
 var pressedKeys = [];
 
@@ -12,124 +9,122 @@ var lastAdded2 = new Date().getTime();
 
 var Timer;
 
+/* last update */
+var then;
+
 /* Funzione di aggiornamento */
-function Update() {
-
-    for (i in colpi) {
-        var newposy = parseInt(colpi[i].obj.style.top) + colpi[i].vy;
-
-        if ((newposy < -10) || (newposy > window.screen.availHeight)) {
-            remove(colpi, i);
-        }
-        else {
-            colpi[i].obj.style.top = newposy + 'px';
-
-            /* Collides Second Ship */
-            if ( colpi[i].id == 1 && Collides(colpi[i], Characters.c2.ship) ) {
-                Characters.c2.life -= 10;
-                document.getElementById('l2').innerText = "LIFE: " + Characters.c2.life;
-                remove(colpi, i);
-                
-                if (Characters.c2.life == 0)
-                    SetWinner(1);
-            }
-
-            /* Collides First Ship */
-            else if ( colpi[i].id == 2 && Collides(colpi[i], Characters.c1.ship) ) {
-                Characters.c1.life -= 10;
-                document.getElementById('l1').innerText = "LIFE: " + Characters.c1.life;
-                remove(colpi, i);
-
-                if (Characters.c1.life == 0)
-                    SetWinner(2);
-            }
-
-        }
-    }
-
-    UpdateInput();
+function GameLoop() {
     
+    var now = new Date();
+    var delta = now - then;
+    
+    Update(delta / 1000);
+    
+    Draw();
+    
+    then = now;
+}
+
+
+function Update(delta) {
+    
+    for (i in Shoots.p1) 
+        Shoots.p1[i].Update(delta);
+    
+    for (i in Shoots.p2) 
+        Shoots.p2[i].Update(delta);
+    
+    UpdateInput(delta); 
 }
 
 /* Aggiornamento dei tasti premuti */
-function UpdateInput() {
-    var vx = 10;
-    var vy = 0;
-
+function UpdateInput(delta) {
+    
     /* First Ship */
-    if (pressedKeys[37] == true) {
+    if (PressedKeys[37] == true) {
         /* left arrow */
-        var oldx = parseInt(Characters.c1.ship.style.left);
-        if (oldx >= 0) Characters.c1.ship.style.left = ( oldx - vx ) + 'px';
+        Players.p1.goLeft(delta)
     }
-
+/*
     if (pressedKeys[38] == true) {
-        /* up arrow */
+        // up arrow
         Characters.c1.ship.style.top = parseInt(Characters.c1.ship.style.top) - vy + 'px';
     }
-
-    if (pressedKeys[39] == true) {
-        /* right arrow */      
-        var oldx = parseInt(Characters.c1.ship.style.left);
-        if (oldx <= ( GetWidth() - parseInt(Characters.c1.ship.style.width) ) ) Characters.c1.ship.style.left = ( oldx + vx ) + 'px';    }
-
+*/
+    if (PressedKeys[39] == true) {
+        /* right arrow */
+        Players.p1.goRight(delta);
+    }
+    
+    /*
     if (pressedKeys[40] == true) {
-        /* down arrow */
+        /. down arrow
         Characters.c1.ship.style.top = parseInt(Characters.c1.ship.style.top) + vy + 'px';
     }
-    if (pressedKeys[80] == true) {
+    */
+    
+    if ( PressedKeys[80] == true ) {
         /* Shoot */
-        AddColpo(1);
+        Players.p1.Shoot();
     }
 
 
     /* Second ship */
     /* WASD SpaceBar */
-    if (pressedKeys[65] == true) {
+    if (PressedKeys[65] == true) {
         /* left arrow */
-        var oldx = parseInt(Characters.c2.ship.style.left);
-        if (oldx >= 0) Characters.c2.ship.style.left = ( oldx - vx ) + 'px';
+        Players.p2.goLeft(delta)
     }
-
+    
+    /*
     if (pressedKeys[87] == true) {
-        /* up arrow */
+        // up arrow
         Characters.c2.ship.style.top = parseInt(Characters.c2.ship.style.top) - vy + 'px';
     }
+    */
 
-    if (pressedKeys[68] == true) {
+    if (PressedKeys[68] == true) {
         /* right arrow */
-        var oldx = parseInt(Characters.c2.ship.style.left);
-        if (oldx <= ( GetWidth() - parseInt(Characters.c2.ship.style.width) ) ) Characters.c2.ship.style.left = ( oldx + vx ) + 'px';
+        Players.p2.goRight(delta)
     }
-
+    
+    /*
     if (pressedKeys[83] == true) {
-        /* down arrow */
+        // down arrow
         Characters.c2.ship.style.top = parseInt(Characters.c2.ship.style.top) + vy + 'px';
     }
-
-    if (pressedKeys[32] == true) {
+    */
+    
+    if (PressedKeys[32] == true) {
         /* Shoot */
-        AddColpo(2);
+        Players.p2.Shoot();
     }
 }
 
-/* Aggiunge un colpo sparato dalla navicella id (indice player) se può essere aggiunto */
-function AddColpo(id) {
+function Draw() {
+    
+    var cnv = document.getElementById('game');
+    var ctx = cnv.getContext('2d');
+    
+    ctx.drawImage(bgImage,0, 0, cnv.width, cnv.height );
+    
+    for (i in Shoots.p1)
+        Shoots.p1[i].Draw(ctx);
+        
+    for (i in Shoots.p2)
+        Shoots.p2[i].Draw(ctx);
+        
+    Players.p1.Draw(ctx);
+    Players.p2.Draw(ctx);
 
-    if (id == 1) {
-        if (new Date().getTime() - lastAdded1 < minInterval) return;
-        lastAdded1 = new Date().getTime();
-        var posx = parseInt(Characters.c1.ship.style.left) - 7 + parseInt(Characters.c1.ship.style.width) / 2;
-        var posy = parseInt(Characters.c1.ship.style.top);
-    }
+    /* Drawing life points */    
+    ctx.fillStyle = "rgb(250, 250, 250)";
+    ctx.font = "24px Helvetica";
+    ctx.textAlign = "left";
 
-    else {
-        if (new Date().getTime() - lastAdded2 < minInterval) return;
-        lastAdded2 = new Date().getTime();
-        var posx = parseInt(Characters.c2.ship.style.left) - 7 + parseInt(Characters.c2.ship.style.width) / 2;
-        var posy = parseInt(Characters.c2.ship.style.top) + parseInt(Characters.c2.ship.style.height);
-    }
-
-    var colpo = new Colpo(posx, posy, id);
-    colpi.push(colpo);
+    ctx.textBaseline = "top";
+    ctx.fillText("Life: " + Players.p2.ship.stats.life , 4 , 0);
+    
+    ctx.textBaseline = "bottom";
+    ctx.fillText("Life: " + Players.p1.ship.stats.life , 4 , Canvas.height);
 }

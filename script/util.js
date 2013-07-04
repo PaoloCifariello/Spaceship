@@ -1,10 +1,11 @@
 /* Get Width size of window */
 function GetWidth() {
     var x = 0;
-    if (self.innerHeight) {
+
+    if (self.innerWidth) {
         x = self.innerWidth;
     }
-    else if (document.documentElement && document.documentElement.clientHeight) {
+    else if (document.documentElement && document.documentElement.clientWidth) {
         x = document.documentElement.clientWidth;
     }
     else if (document.body) {
@@ -16,6 +17,7 @@ function GetWidth() {
 /* Get Height size of window */
 function GetHeight() {
     var y = 0;
+
     if (self.innerHeight) {
         y = self.innerHeight;
     }
@@ -38,29 +40,6 @@ function Show(el) {
     el.style.visibility = "visible";
 }
 
-/* Initialize ship property */
-function InitializeShip(ship, id) {
-
-    ship.style.position = 'absolute';
-    ship.style.left = GetWidth() / 2 + 'px';
-    ship.style.margin = "0px";
-    ship.style.width = '160px';
-    ship.style.height = '80px';
-
-    if (id == 1) {
-        ship.style.top = (GetHeight() - parseInt(ship.style.height)) + 'px';
-    }
-
-    else {
-        ship.style.top = "0px";
-    }
-
-    Hide(ship);
-
-    ship.onclick = "";
-    ship.onmouseover = "";
-    ship.onmouseout = "";
-}
 
 /* controlla se ball collide con ship */
 function Collides ( ball, ship)
@@ -82,59 +61,24 @@ function Collides ( ball, ship)
 }
 
 /* Rimuove il colpo di indice index dall'array array */
-function remove(array, index)
+function removeShoot(array, index)
 {
-    var toRemove = array[index].obj;
-    document.body.removeChild(toRemove);
     array.splice(index, 1);
 }
 
-/* Initialize main windows */
+/* Initialize game */
 function InitializeScenario()
 {
+    /* create, initialize and add canvas */
+    var cnv = document.createElement('canvas');
+    cnv.id = 'game';
+    cnv.width = GetWidth() - 25;
+    cnv.height = GetHeight() - 25;
 
-        var life1 = document.createElement('p');
-        var life2 = document.createElement('p');
-
-        life2.id = 'l1';
-        life1.id = 'l2';
-        
-        life1.className += 'life';
-        life2.className += 'life';
-
-        life1.innerText = 'LIFE: 100';
-        life2.innerText = 'LIFE: 100';
-
-        life1.style.position = 'absolute';
-        life2.style.position = 'absolute';
-
-        life1.style.left = '0px';
-        life2.style.left = '0px';
-
-        life1.style.top = '0px';
-        life2.style.top = (GetHeight() - 50) + 'px';
-        /* creates background */   
-        var background = document.createElement('img');
-        background.alt = 'Could not display background';
-        background.src = 'images/background.jpg';
-        background.class = 'background';
-        background.style.width = GetWidth() + 'px';
-        background.style.height = GetHeight() + 'px';
-
-        document.body.appendChild(background);
-
-        /* append and show ship images */
-        document.body.appendChild(Characters.c1.ship);
-        document.body.appendChild(Characters.c2.ship);
-
-        document.body.appendChild(life1);
-        document.body.appendChild(life2);
-
-        Show(Characters.c1.ship);
-        Show(Characters.c2.ship);
-
-        document.addEventListener("keydown", KeyDown, false);
-        document.addEventListener("keyup", KeyUp, false);
+    document.addEventListener("keydown", KeyDown, false);
+    document.addEventListener("keyup", KeyUp, false);
+    
+    document.body.appendChild(cnv);
 }
 
 function AddCounter()
@@ -145,28 +89,54 @@ function AddCounter()
     document.appendChild('counter');    
 }
 
-function SetWinner(id)
+function SetWinner(player)
 {
     clearInterval(Timer);
-    colpi = {};
+
+    Shoots.p1 = {};
+    Shoots.p2 = {};
 
     document.body.innerHTML = "";
 
-    if ( id == 1 )
-	    var winner = Characters.c1.ship;
-	    else var winner = Characters.c2.ship;
-	    
-    document.write('Il vincitore è Player' + id + '!' + '<br>' + 'con ' + winner.id);
+    document.write('Il vincitore è Player' + player.id + '!' + '<br>' + 'con ' + player.ship.stats.name);
+}
 
-    document.body.appendChild(winner);
-   
-    winner.style.left = '100px';
-    winner.style.top = '100px';
-	
-    document.write('<br>');
-    document.write('<br>');
+function InitializeSelectPG()
+{
+    document.write('<ul>');
 
-    document.write('Partite Giocate: ');
+    for (i in ShipImage) {
+
+        document.write('<li>');
+        document.write('<div>');
+        InsertImageShip(i);
+        document.write('</div>');
+        document.write('</li>');
+    }
+
+    document.write('</ul>');
+
+}
+
+function InsertImageShip(id)
+{
+    document.write('<img id="' + id + '" class="Scelta" alt="Impossibile visualizzare" src="images/ship' + id + '.png" onmouseover="Over(this)" onmouseout="notOver(this)" onclick="ClickShip(this)"></img>');
+}
+
+/* Aggiunge un colpo sparato dalla navicella id (indice player) se può essere aggiunto */
+function AddColpo(player) {
+
+    var now = Date.now();
     
-    document.write('<script type="text/javascript" src="http://www.altervista.org/js_tags/contatore.js"></script>');
+    //alert( player.ship.stats.vel - ( now - player.lastShoot ) );
+    
+    if ( ( now - player.lastShoot ) < player.ship.stats.ric )
+	return;
+	
+    if ( player.id == 1 )
+	Shoots.p1.push( new Colpo( player ) );
+    else
+	Shoots.p2.push( new Colpo( player ) );
+    
+    player.lastShoot = now;
 }
