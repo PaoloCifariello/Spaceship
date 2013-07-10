@@ -3,36 +3,40 @@
  */
 function ClickShip(ship) 
 {
-    if (Players.p1) 
+    var player1 = Game.getPlayer(1);
+    
+    if ( player1 ) 
     {
         /* Create new Ship and new Player 2 */
-        Players.p2 = new Player( 2 , new Ship( ship.id ) );
-
+        var player2 = new Player( 2 , new Ship( ship.id ) );
+        Game.setPlayer(2, player2);
+        
         document.body.innerHTML = "";
 
         /* Inizializza il canvas dopo la scelta della nave */
-        InitializeScenario();
+        Util.initializeScenario();
 
         Canvas = document.getElementById('game');
         
-        Players.p1.posx = Canvas.width / 2;
-        Players.p1.posy = Canvas.height - Players.p1.ship.stats.dy;
+        player1.posx = Canvas.width / 2;
+        player1.posy = Canvas.height - player1.ship.stats.dy;
         
-        Players.p2.posx = Canvas.width / 2;
-        Players.p2.posy = 0;
+        player2.posx = Canvas.width / 2;
+        player2.posy = 0;
         
         then = new Date();
     
         /* Start Game */
-        Timer = setInterval( GameLoop ,  20 );
+        Game.startGame(1);
     }
 
     else
     {
         /* Create new Ship and new Player 1 */
-        Players.p1 = new Player( 1 , new Ship( ship.id ) );
+        player1 = new Player( 1 , new Ship( ship.id ) );
+        Game.setPlayer(1 , player1 );
         
-        document.getElementById('chooseTitle').innerText = 'Player 2 scegli la navicella:\nSpostati con A-D e spara con Backspace';
+        document.getElementById('chooseTitle').innerText = 'Player 2 scegli la navicella:\nSpostati con W-A-S-D e spara con Backspace';
     }
 }
 
@@ -50,10 +54,10 @@ function notOver(obj)
 
 function KeyUp(e)
 {
-    PressedKeys[e.keyCode] = false;
+    Game.PressedKeys[e.keyCode] = false;
 }
 
 function KeyDown(e)
 {
-    PressedKeys[e.keyCode] = true;
+    Game.PressedKeys[e.keyCode] = true;
 }
