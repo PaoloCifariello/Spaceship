@@ -26,7 +26,7 @@ function Player(index, ship){
     this.goUp = function(delta){
         
         if (this.id == 1) {   
-           if ( this.posy > ( Canvas.height / 2 ) )
+           if ( this.posy > ( $(Game.Canvas).attr('height') / 2 ) )
             this.posy -= this.ship.stats.vx * delta;        
         }
         else {
@@ -45,19 +45,19 @@ function Player(index, ship){
     this.goDown = function(delta){
         
         if (this.id == 1) {  
-           if ( this.posy < ( Canvas.height - this.ship.stats.dy ) ) 
+           if ( this.posy < ( $(Game.Canvas).attr('height') - this.ship.stats.dy ) ) 
             this.posy += this.ship.stats.vx * delta;        
         }
         else {
             
-            if ( this.posy < ( ( Canvas.height / 2 ) - this.ship.stats.dy ) ) 
+            if ( this.posy < ( ( $(Game.Canvas).attr('height') / 2 ) - this.ship.stats.dy ) ) 
             this.posy += this.ship.stats.vx * delta;  
         }
     }
     
     this.goRight = function(delta){
     
-        if ( this.posx < ( Util.getWidth() - this.ship.stats.dx ) ) 
+        if ( this.posx < ( $(Game.Canvas).attr('width') - this.ship.stats.dx ) ) 
             this.posx += this.ship.stats.vx * delta;       
     }
     
@@ -65,8 +65,8 @@ function Player(index, ship){
         if (this.colpito) {
             ctx.setAlpha(0.65);
         }
-        ctx.drawImage(this.ship.img, this.posx, this.posy , this.ship.stats.dx, this.ship.stats.dy);
         
+        ctx.drawImage(this.ship.img, this.posx, this.posy , this.ship.stats.dx, this.ship.stats.dy);
         ctx.setAlpha(1);
     }
     
@@ -140,7 +140,7 @@ function Colpo(player){
         
         this.posy += this.vy * delta;
         
-        if ( ( this.posy < 0 ) || ( this.posy >= Canvas.height ) ) {
+        if ( ( this.posy < 0 ) || ( this.posy >= $(Game.Canvas).attr('height') ) ) {
             Util.removeShoot( this.shoots , i );
             return;
         }

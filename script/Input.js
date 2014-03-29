@@ -11,17 +11,17 @@ function ClickShip(ship)
         var player2 = new Player( 2 , new Ship( ship.id ) );
         Game.setPlayer(2, player2);
         
-        document.body.innerHTML = "";
+        $(document.body).text("");
 
         /* Inizializza il canvas dopo la scelta della nave */
         Util.initializeScenario();
 
-        Canvas = document.getElementById('game');
+        var cnv = Game.Canvas;
         
-        player1.posx = Canvas.width / 2;
-        player1.posy = Canvas.height - player1.ship.stats.dy;
+        player1.posx = $(cnv).width() / 2;
+        player1.posy = $(cnv).height() - player1.ship.stats.dy;
         
-        player2.posx = Canvas.width / 2;
+        player2.posx = $(cnv).width() / 2;
         player2.posy = 0;
         
         then = new Date();
@@ -36,28 +36,18 @@ function ClickShip(ship)
         player1 = new Player( 1 , new Ship( ship.id ) );
         Game.setPlayer(1 , player1 );
         
-        document.getElementById('chooseTitle').innerText = 'Player 2 scegli la navicella:\nSpostati con W-A-S-D e spara con Backspace';
+        $("#chooseTitle").text('Player 2 scegli la navicella:\nSpostati con W-A-S-D e spara con Backspace');
     }
 }
 
 function Over(obj)
 {
-    obj.width = (parseInt(obj.width) * 1.5);
-    obj.height = (parseInt(obj.height) * 1.5);
+    $(obj).width($(obj).width() * 1.5);
+    $(obj).height($(obj).height() * 1.5);
 }
 
 function notOver(obj)
 {
-    obj.width = (parseInt(obj.width) / 1.5);
-    obj.height = (parseInt(obj.height) / 1.5);
-}
-
-function KeyUp(e)
-{
-    Game.PressedKeys[e.keyCode] = false;
-}
-
-function KeyDown(e)
-{
-    Game.PressedKeys[e.keyCode] = true;
+    $(obj).width($(obj).width() / 1.5);
+    $(obj).height($(obj).height() / 1.5);
 }

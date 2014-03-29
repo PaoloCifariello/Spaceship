@@ -66,29 +66,29 @@ function UpdateInput(delta) {
     player2 = Game.getPlayer(2);
     
     /* First Ship */
-    if (PressedKeys[37] == true) {
+    if (PressedKeys[37] === true) {
         /* left arrow */
         player1.goLeft(delta)
     }
 
-    if (PressedKeys[38] == true) {
+    if (PressedKeys[38] === true) {
         // up arrow
         player1.goUp(delta);
     }
 
-    if (PressedKeys[39] == true) {
+    if (PressedKeys[39] === true) {
         /* right arrow */
         player1.goRight(delta);
     }
     
     
-    if (PressedKeys[40] == true) {
+    if (PressedKeys[40] === true) {
         /* down arrow */
         player1.goDown(delta);
     }
     
     
-    if ( PressedKeys[80] == true ) {
+    if ( PressedKeys[80] === true ) {
         /* Shoot */
         player1.Shoot();
     }
@@ -96,31 +96,31 @@ function UpdateInput(delta) {
 
     /* Second ship */
     /* WASD SpaceBar */
-    if (PressedKeys[65] == true) {
+    if (PressedKeys[65] === true) {
         /* left arrow */
         player2.goLeft(delta)
     }
     
     
-    if (PressedKeys[87] == true) {
+    if (PressedKeys[87] === true) {
         // up arrow
         player2.goUp(delta);
     }
 
 
-    if (PressedKeys[68] == true) {
+    if (PressedKeys[68] === true) {
         /* right arrow */
         player2.goRight(delta)
     }
     
     
-    if (PressedKeys[83] == true) {
+    if (PressedKeys[83] === true) {
         // down arrow
         player2.goDown(delta);
     }
     
     
-    if (PressedKeys[32] == true) {
+    if (PressedKeys[32] === true) {
         /* Shoot */
         player2.Shoot();
     }
@@ -128,9 +128,9 @@ function UpdateInput(delta) {
 
 function Draw() {
     
-    var ctx = Canvas.getContext('2d');
+    var ctx = Game.Canvas.getContext('2d');
     
-    ctx.drawImage( Game.getBackground() , 0 , 0, Canvas.width , Canvas.height );
+    ctx.drawImage( Game.getBackground() , 0 , 0, $(Game.Canvas).width() , $(Game.Canvas).height() );
     
     Shoots = Game.getShoots(1);
     for (i in Shoots)
@@ -151,7 +151,7 @@ function Draw() {
     ctx.textAlign = "left";
 
     ctx.textBaseline = "bottom";
-    ctx.fillText("Life: " + Math.round( (player1.life * 100 ) / player1.ship.stats.life ) + '%'  , 4 , Canvas.height);
+    ctx.fillText("Life: " + Math.round( (player1.life * 100 ) / player1.ship.stats.life ) + '%'  , 4 , $(Game.Canvas).height());
 
     ctx.textBaseline = "top";
     ctx.fillText("Life: " + Math.round( (player2.life * 100 ) / player2.ship.stats.life  ) + '%' , 4 , 0 );
