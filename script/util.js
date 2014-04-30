@@ -36,18 +36,20 @@ var Util = (function(){
     function initializeScenario()
     {
         /* create, initialize and add canvas */
-        Game.Canvas = document.createElement('canvas');
-        var cnv = Game.Canvas;
+        var cnv = Game.Canvas = $('<canvas />')[0];
         $(cnv).attr('id','game');
         $(cnv).width(getWidth() - 25);
         $(cnv).height(getHeight() - 25);
-        $(cnv).attr('width', getWidth());
-        $(cnv).attr('height', getHeight());
         
-        document.write('<audio src="sound/backtrack.mp3" autoplay loop></audio>')
-
-        document.addEventListener('keydown',keydown);
-        document.addEventListener('keyup', keyup);
+        $(cnv).attr('width', getWidth() - 25);
+        $(cnv).attr('height', getHeight() - 25);
+        
+        $(document.head).append($('<audio src="sound/backtrack.mp3" autoplay loop />')); 
+        $(document.body).append($(cnv));
+        
+        // set keydown and keyup event handler
+        $(document).keydown(keydown)
+        $(document).keyup(keyup);
         
         function keydown(e) {
             Game.PressedKeys[e.keyCode] = true;
@@ -55,7 +57,6 @@ var Util = (function(){
         function keyup(e) {
             Game.PressedKeys[e.keyCode] = false;
         }
-        // set keydown and keyup event handler
         
         $(document.body).append(cnv);
     }

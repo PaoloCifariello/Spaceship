@@ -10,8 +10,7 @@ function ClickShip(ship)
         /* Create new Ship and new Player 2 */
         var player2 = new Player( 2 , new Ship( ship.id ) );
         Game.setPlayer(2, player2);
-        
-        $(document.body).text("");
+        $(document.body).html("");
 
         /* Inizializza il canvas dopo la scelta della nave */
         Util.initializeScenario();

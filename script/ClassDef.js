@@ -24,50 +24,57 @@ function Player(index, ship){
     this.lastShoot = Date.now();
     
     this.goUp = function(delta){
+        var limit = 0;
         
-        if (this.id == 1) {   
-           if ( this.posy > ( $(Game.Canvas).attr('height') / 2 ) )
-            this.posy -= this.ship.stats.vx * delta;        
-        }
-        else {
-            
-            if ( this.posy > 0 ) 
-            this.posy -= this.ship.stats.vx * delta;  
-        }
+        if (this.id == 1)
+            limit = $(Game.Canvas).attr('height') / 2;
+           
+        if (this.posy > limit)
+            this.posy -= this.ship.stats.vx * delta;
+        
+        if (this.posy < limit)
+            this.posy = limit;
     }
     
     this.goLeft = function(delta){
         
-        if ( this.posx > 0 ) 
-            this.posx -= this.ship.stats.vx * delta;       
+        if (this.posx > 0) 
+            this.posx -= this.ship.stats.vx * delta;
+        if (this.posx < 0)
+            this.posx = 0;
     }
     
     this.goDown = function(delta){
         
-        if (this.id == 1) {  
-           if ( this.posy < ( $(Game.Canvas).attr('height') - this.ship.stats.dy ) ) 
-            this.posy += this.ship.stats.vx * delta;        
-        }
-        else {
+        var limit = ($(Game.Canvas).attr('height') / 2) - this.ship.stats.dy;
+        
+        if (this.id == 1)
+            limit = $(Game.Canvas).attr('height') - this.ship.stats.dy;
             
-            if ( this.posy < ( ( $(Game.Canvas).attr('height') / 2 ) - this.ship.stats.dy ) ) 
-            this.posy += this.ship.stats.vx * delta;  
-        }
+        
+        if (this.posy < limit) 
+            this.posy += this.ship.stats.vx * delta;        
+        
+        if (this.posy > limit)
+            this.posy = limit;
     }
     
     this.goRight = function(delta){
-    
-        if ( this.posx < ( $(Game.Canvas).attr('width') - this.ship.stats.dx ) ) 
-            this.posx += this.ship.stats.vx * delta;       
+        var limit = $(Game.Canvas).attr('width') - this.ship.stats.dx;
+        
+        if (this.posx < limit) 
+            this.posx += this.ship.stats.vx * delta;
+        
+        if (this.posx > limit)
+            this.posx = limit;
     }
     
     this.Draw = function(ctx){
-        if (this.colpito) {
-            ctx.setAlpha(0.65);
-        }
+        if (this.colpito)
+            ctx.globalAlpha = 0.65;
         
         ctx.drawImage(this.ship.img, this.posx, this.posy , this.ship.stats.dx, this.ship.stats.dy);
-        ctx.setAlpha(1);
+        ctx.globalAlpha = 1;
     }
     
     this.Shoot = function(){
