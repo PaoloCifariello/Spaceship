@@ -17,7 +17,7 @@ module Core {
 
         constructor() {
             this.app = express();
-            this.serverSocket = new ServerSocket(this, this.database);
+            this.serverSocket = new ServerSocket(this);
             this.port = process.env.PORT || WebServerConfiguration.PORT;
 
             this.HTTPServer = http.createServer(this.app);
@@ -28,7 +28,7 @@ module Core {
             this.app.use(morgan('dev'));     // log every request to the console
             
             // web server routes
-            this.RoutesInitializer.Initialize(this.app, this.database);
+            this.RoutesInitializer.Initialize(this.app);
 
             // server socket initialization
             this.serverSocket.Initialize();

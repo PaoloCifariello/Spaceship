@@ -9,9 +9,8 @@ module Core {
         private DrawingSessions = {};
         private UserSessions = {};
 
-        public constructor(WebServer, Database) {
+        public constructor(WebServer) {
             this.WebServer = WebServer;
-            this.Database = Database;
         }
 
         public Initialize() {
@@ -20,6 +19,7 @@ module Core {
         }
 
         private onSocketConnection(socket) {
+            console.log("wooo");
             socket.on('login', (data) => this.onLogin.call(this, socket, data));
             socket.on('save', (data) => this.onSave.call(this, socket, data));
             socket.on('update', (data) => this.onUpdate.call(this, socket, data));
@@ -27,6 +27,8 @@ module Core {
         }
 
         private onLogin(socket, loginData: {drawingId: string, username: string}) {
+            console.log("new user");
+            console.log(socket);
             var self = this;
 
             var userSession = this.UserSessions[socket.id] = {

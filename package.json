@@ -15,6 +15,7 @@
   },
   "devDependencies": {
     "gulp": "*",
-    "gulp-typescript": "*"
+    "gulp-typescript": "*",
+    "gulp-sourcemaps": "*"
   }
 }

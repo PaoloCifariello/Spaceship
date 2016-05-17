@@ -31,7 +31,7 @@ module Core.Routes {
         }
         
         private static renderIndex(req: express.Request, res: express.Response) {
-            res.sendFile(path.resolve(process.cwd(), 'client/index.html'));
+            res.sendFile(path.resolve(process.cwd(), 'client/views/game.html'));
         }
  
 
