@@ -1,0 +1,17 @@
+ul{
+    display: block;
+    list-style: none;
+}
+li{
+    list-style-type: none;
+}
+
+.Scelta{
+    position: relative;
+    height: 80px;
+    width: 160px;
+    float: left;
+    margin-left: 85px;
+    margin-bottom: 100px;
+    left: -80px;
+}
