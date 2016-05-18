@@ -1,8 +1,6 @@
 
-class Player {
-    constructor(index, ship) {
+export class Player {
+    constructor(index) {
         
     }
 }
-
-export { Player };

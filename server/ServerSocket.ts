@@ -1,39 +1,25 @@
 import * as io from 'socket.io';
-
+import {WebServer} from './WebServer';
+import {GameServer} from './GameServer';
 
 export class ServerSocket {
-    private WebServer;
-    private serverSocket;
+    private game: GameServer;
+    private webServer: WebServer;
+    private serverSocket: SocketIO.Server;
 
-    private lookingForMatch = null;
+    private lookingForMatch: SocketIO.Socket = null;
 
-    public constructor(WebServer) {
-        this.WebServer = WebServer;
+    public constructor(game: GameServer, webServer: WebServer) {
+        this.game = game;
+        this.webServer = webServer;
     }
 
-    public Initialize() {
-        this.serverSocket = io(this.WebServer.HTTPServer);
-        this.serverSocket.on('connection', (socket) => this.onSocketConnection.call(this, socket));
+    public initialize() {
+        this.serverSocket = io(this.webServer.HTTPServer);
+        this.serverSocket.on('connection', (socket: SocketIO.Socket) => this.onSocketConnection.call(this, socket));
     }
 
-    private onSocketConnection(socket) {
-        socket.on('find match', (data) => this.onLookForMatch.call(this, socket, data));
-        socket.on('disconnect', () => this.onDisconnect.call(this, socket));
-    }
-
-    private onLookForMatch(socket, data) {
-        if (this.lookingForMatch == null) {
-            this.lookingForMatch = socket;
-        } else if (this.lookingForMatch != socket) {
-            socket.emit('match found');
-            this.lookingForMatch
-            console.log("new match between " + socket.id + this.lookingForMatch.id);
-        }
-    }
-
-    private onDisconnect(socket) {
-        if (this.lookingForMatch == socket) {
-            this.lookingForMatch = null;
-        }
+    private onSocketConnection(socket: SocketIO.Socket) {
+        this.game.newPlayer(socket);
     }
 }

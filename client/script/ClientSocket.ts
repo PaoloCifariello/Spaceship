@@ -1,4 +1,4 @@
-import { Game } from './Game';
+import {Game} from './Game';
 
 export class ClientSocket {
     private socket: SocketIOClient.Socket;
@@ -10,14 +10,10 @@ export class ClientSocket {
     
     public initialize() {
         this.socket = io();
-        this.socket.on("game found", this.onGameFound)
     }
     
     public lookForGame() {
         this.socket.emit("find match");
-    }
-    
-    private onGameFound(data) {
-        console.log("Game found");
+        this.socket.on("match found", (data) => this.game.onGameFound.call(this.game, data))
     }
 }

@@ -1,11 +1,9 @@
 /// <reference path="typings/main.d.ts" />
 import { ApplicationConfiguration } from './config/ApplicationConfiguration';
 
-import { WebServer } from './WebServer';
+import { GameServer } from './GameServer';
 
 // Setting up Web Server
-var app = new WebServer();
-app.Initialize();
-
-// launch Web server
-app.Listen();
+var game = new GameServer();
+game.initialize();
+game.start();
