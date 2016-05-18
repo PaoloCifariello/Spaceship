@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "simple canvas game",
   "scripts": {
-    "start": "node server/server.js",
+    "start": "node server/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -15,7 +15,9 @@
   },
   "devDependencies": {
     "gulp": "*",
+    "gulp-concat": "^2.6.0",
+    "gulp-sourcemaps": "*",
     "gulp-typescript": "*",
-    "gulp-sourcemaps": "*"
+    "webpack-stream": "^3.2.0"
   }
 }

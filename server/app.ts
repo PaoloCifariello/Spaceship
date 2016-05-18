@@ -1,7 +1,7 @@
 /// <reference path="typings/main.d.ts" />
-import ApplicationConfiguration = require('./config/ApplicationConfiguration');
+import { ApplicationConfiguration } from './config/ApplicationConfiguration';
 
-import WebServer = require('./WebServer');
+import { WebServer } from './WebServer';
 
 // Setting up Web Server
 var app = new WebServer();

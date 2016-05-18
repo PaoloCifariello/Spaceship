@@ -1,6 +1,3 @@
-module Configuration {
-    export class ApplicationConfiguration {
-    };
-}
 
-export = Configuration.ApplicationConfiguration;
+export class ApplicationConfiguration {
+};
