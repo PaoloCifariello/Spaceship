@@ -82,7 +82,9 @@ export class Renderer {
     public drawShip(shipId: number, pos: {x: number, y: number, dx: number, dy: number} ) {
         let shipImage = shipImages[shipId];
         
-        this.ctx.drawImage(shipImage, pos.x, pos.y , pos.dx, pos.dy);
+        let realX = pos.x * $(this.canvas).width() / 1000;
+        let realY = pos.y * $(this.canvas).height() / 1000;
+        this.ctx.drawImage(shipImage, realX, realY , pos.dx, pos.dy);
         this.ctx.globalAlpha = 1;
     }
 }

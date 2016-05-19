@@ -8,6 +8,8 @@ export class Player {
     private ID: string;
     private Ship: string = null;
     private match: Match;
+    private topLimit: number;
+    private bottomLimit: number;
     private input: {
         w: boolean,
         a: boolean,
@@ -35,6 +37,11 @@ export class Player {
         this.socket.on('disconnect', () => this.onDisconnect.call(this));
         this.socket.on('input update', (input) => this.onInputUpdate.call(this, input));
     }   
+    
+    public setLimits(topLimit: number, bottomLimit: number) {
+        this.topLimit = topLimit;
+        this.bottomLimit = bottomLimit;
+    }
     
     private onFindMatch(data) {
         this.game.findMatch(this);
@@ -75,18 +82,31 @@ export class Player {
     }
     
     private goUp(delta) {
+        var limit = this.topLimit;
         
+        if (this.position.y > limit) 
+            this.position.y -= 1 * delta;
+        if (this.position.y < limit)
+            this.position.y = limit;
     }
     
     private goLeft(delta) {
-        if (this.position.x > 0) 
+        var limit = 0;
+        
+        if (this.position.x > limit) 
             this.position.x -= 1 * delta;
-        if (this.position.x < 0)
-            this.position.x = 0;    
+        if (this.position.x < limit)
+            this.position.x = limit;
     }
     
     private goDown(delta) {
+        var limit = this.bottomLimit;
         
+        if (this.position.y < limit) 
+            this.position.y += 1 * delta;
+        
+        if (this.position.y > limit)
+            this.position.y = limit;
     }
     
     private goRight(delta) {
