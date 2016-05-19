@@ -9,6 +9,9 @@ let shipImages = {
     5: 'images/ship5.png'
 };
 
+let shootImage = new Image() 
+shootImage.src = 'images/colpo1.png';
+
 export class Renderer {
     private game: Game;
     private canvas: HTMLCanvasElement;
@@ -86,5 +89,12 @@ export class Renderer {
         let realY = pos.y * $(this.canvas).height() / 1000;
         this.ctx.drawImage(shipImage, realX, realY , pos.dx, pos.dy);
         this.ctx.globalAlpha = 1;
+    }
+    
+    public drawShoot(x: number, y: number) {
+        let realX = x * $(this.canvas).width() / 1000;
+        let realY = y * $(this.canvas).height() / 1000;
+        
+        this.ctx.drawImage(shootImage , realX, realY);  
     }
 }

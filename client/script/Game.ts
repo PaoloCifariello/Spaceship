@@ -54,7 +54,9 @@ export class Game {
     
     public refresh(data) {
         this.localPlayer.position = new Point(data.localPlayer.x, data.localPlayer.y);
+        this.localPlayer.shoots = data.localPlayer.shoots;
         this.remotePlayer.position = new Point(data.remotePlayer.x, data.remotePlayer.y);
+        this.remotePlayer.shoots = data.remotePlayer.shoots;
     }
     
     public start(matchData) {

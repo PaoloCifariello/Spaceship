@@ -59,7 +59,7 @@ export class GameServer {
     
     private newMatch(p1: Player, p2: Player) {
         let match = new Match(this, p1, p2);
-        p1.addMatch(match);
-        p2.addMatch(match);
+        p1.addMatch(match, 1);
+        p2.addMatch(match, 2);
     }
 }
