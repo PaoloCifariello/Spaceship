@@ -17,14 +17,32 @@ export class Match {
     }
     
     private onShipSelect(player, data) {
-        player.addShip(data.ship);
+        player.addShip(data.shipId);
         
-        if (this.player1.ship() && this.player2.ship()) {
+        if (this.player1.ship() !== null && this.player2.ship() !== null) {
             this.start();
         }
     }
     
     private start() {
+        console.log(this.player1.ship());
+        console.log(this.player2.ship());
+        this.player1.send('match start', {
+            local: {
+                "shipId": this.player1.ship()
+            }, 
+            remote: {
+                "shipId": this.player2.ship()
+            }
+        });
         
+        this.player2.send('match start', {
+            local: {
+                shipId: this.player2.ship()
+            }, 
+            remote: {
+                shipId: this.player1.ship()
+            }
+        })
     }
 }

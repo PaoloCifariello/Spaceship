@@ -1,15 +1,24 @@
 import {ClientSocket} from './ClientSocket';
 import {Player} from './Player';
+import {Renderer} from './Renderer';
 
 export class Game {
     private canvas: HTMLCanvasElement;
     private clientSocket: ClientSocket;
+    private renderer: Renderer;
+    private timerId: number;
+    private lastTiming: number;
     
     private localPlayer: Player;
     private remotePlayer: Player;
     
     constructor() {
         this.clientSocket = new ClientSocket(this);
+        this.renderer = new Renderer(this);
+    }
+    
+    private getTiming() {
+        return (new Date()).getMilliseconds();
     }
     
     public initialize() {
@@ -28,22 +37,40 @@ export class Game {
         this.clientSocket.lookForGame();
     }
     
-    public chooseShip() {
+    public chooseShip(shipId) {
+        this.clientSocket.send('ship select', {
+            shipId: shipId
+        });
+    }
+    
+    public start(matchData) {
+        this.localPlayer = new Player(matchData.local.shipId);
+        this.remotePlayer = new Player(matchData.remote.shipId);
         
+        this.renderer.initializeScenario();
+        this.lastTiming = this.getTiming();
+        this.timerId = setInterval(() => this.gameLoop.call(this), 1);
+    }
+    
+    public gameLoop() {
+        let actualTiming = this.getTiming();
+        let delta = actualTiming - this.lastTiming;
+        
+        this.update(delta);
+        this.draw();
+        
+        this.lastTiming = actualTiming; 
+    }
+    
+    public update(delta) {
+        console.log("Update " + delta);
+    }
+    
+    public draw() {
+        console.log("Draw");
     }
     
     public onGameFound(data) {
-        $('#prematch').hide();
-        $('#main').show();
-        $(".SceltaImg").mouseover(function(event) {
-            let obj = event.target;
-            $(obj).width($(obj).width() * 1.5);
-            $(obj).height($(obj).height() * 1.5);
-        });
-        $(".SceltaImg").mouseout(function(event) {
-            let obj = event.target;
-            $(obj).width($(obj).width() / 1.5);
-            $(obj).height($(obj).height() / 1.5);
-        });
+        this.renderer.initializeShipChoice();
     }
 }

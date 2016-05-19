@@ -5,7 +5,7 @@ export class Player {
     private game: GameServer;
     private socket: SocketIO.Socket;
     private ID: string;
-    private Ship: string;
+    private Ship: string = null;
     private match: Match;
     
     constructor(game: GameServer, socket: SocketIO.Socket) {
