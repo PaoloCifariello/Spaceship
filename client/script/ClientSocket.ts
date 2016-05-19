@@ -16,6 +16,7 @@ export class ClientSocket {
         this.socket.emit("find match");
         this.socket.on("match found", (data) => this.game.onGameFound.call(this.game, data));
         this.socket.on("match start", (data) => this.game.start.call(this.game, data));
+        this.socket.on("update", (data) => this.game.refresh.call(this.game, data));
     }
     
     public send(event: string, data) {
