@@ -4,7 +4,7 @@ import {Point} from './Point';
 export class Player {
     private shipId: number;
     public position: Point;
-    public shoots: {x: number, y: number}[];
+    public shoots: {x: number, y: number}[] = [];
     
     constructor(shipId) {
         this.shipId = shipId;

@@ -1,9 +1,10 @@
 import {GameServer} from './GameServer';
+import {Entity} from './Entity';
 import {Match} from './Match';
 import {Point} from './Point';
-import {Shoot} from './Shoot';
+import {Bullet} from './Bullet';
 
-export class Player {
+export class Player extends Entity {
     private game: GameServer;
     private socket: SocketIO.Socket;
     private ID: string;
@@ -26,12 +27,12 @@ export class Player {
         backspace: false
     };
     
-    public position: Point;
-    public shoots: Shoot[] = [];
+    public shoots: Bullet[] = [];
     public playerId: number;
     public ship: string = null;
     
     constructor(game: GameServer, socket: SocketIO.Socket) {
+        super();
         this.game = game;
         this.socket = socket;
         this.ID = socket.id;
@@ -60,7 +61,7 @@ export class Player {
         return this.ID;
     }
     
-    public removeShoot(shoot: Shoot) {
+    public removeShoot(shoot: Bullet) {
         let ind = this.shoots.indexOf(shoot);
         if (ind > -1) {
             this.shoots.splice(ind, 1);
@@ -83,8 +84,9 @@ export class Player {
         this.socket.on('ship select', (data) => this.match.onShipSelect.call(this.match, this, data));
     }
     
-    public setPosition(position: Point) {
-        this.position = position;
+    public moveTo(position: Point) {
+        this.position.x = position.x;
+        this.position.y = position.y;
     }
     
     public send(message: string, data) {
@@ -133,27 +135,18 @@ export class Player {
         if ((now - this.lastShoot) < 500)
             return;
 
-        this.shoots.push(new Shoot(this));
+        this.shoots.push(new Bullet(this));
         this.lastShoot = now;
     }
     
     public update(delta: number) {
-        if (this.input.w) {
-            this.goUp(delta);
-        }
-        if (this.input.a) {
-            this.goLeft(delta);
-        }
-        if (this.input.s) {
-            this.goDown(delta);
-        }
-        if (this.input.d) {
-            this.goRight(delta);
-        }
+        this.updateSpeed();
+        super.update(delta);
+       
         if (this.input.backspace) {
             this.shoot();
         }
-        
+       
         let nextShoots = [];
         this.shoots.forEach((shoot) => {
            shoot.update(delta);
@@ -163,5 +156,23 @@ export class Player {
         });
         
         this.shoots = nextShoots;
+    }
+    
+    public updateSpeed() {
+        if (this.input.w) {
+            this.speed.y = -1
+        } else if (this.input.s) {
+            this.speed.y = 1;
+        } else {
+            this.speed.y = 0;
+        }
+        
+        if (this.input.a) {
+            this.speed.x = -1;
+        } else if (this.input.d) {
+            this.speed.x = 1;
+        } else {
+            this.speed.x = 0;
+        }
     }
 }

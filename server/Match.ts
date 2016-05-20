@@ -13,8 +13,8 @@ export class Match {
         this.player1 = player1;
         this.player2 = player2;
         
-        this.player1.setPosition(Point.fromPoint(GameConfiguration.PLAYER1_INITIAL_POSITION));
-        this.player2.setPosition(Point.fromPoint(GameConfiguration.PLAYER2_INITIAL_POSITION));
+        this.player1.moveTo(GameConfiguration.PLAYER1_INITIAL_POSITION);
+        this.player2.moveTo(GameConfiguration.PLAYER2_INITIAL_POSITION);
     }
     
     public onShipSelect(player, data) {

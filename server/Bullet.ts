@@ -1,29 +1,26 @@
+import {Entity} from './Entity';
 import {Player} from './Player';
 import {Point} from './Point';
 
-export class Shoot {
+export class Bullet extends Entity {
     private player: Player;
-    private speed: number;
-    public position: Point;
     
     constructor(player: Player) {
+        super();
         this.player = player;
         this.position = Point.fromPoint(this.player.position);
         
         if (player.playerId == 1) {
-            this.speed = 1;
+            this.speed = new Point(0, 1);
         } else {
-            this.speed = -1;
+            this.speed = new Point(0, -1);
         }
     }
     
     public update(delta) {
-        this.position.y += this.speed*delta;
+        this.position.y += this.speed.y * delta;
     }
     
-    public isVisible() {
-        return this.position.y > 0 && this.position.y < 1000;
-    }
     public draw() {
         
     }

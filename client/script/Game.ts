@@ -101,7 +101,6 @@ export class Game {
     }
     
     public keydown(event: JQueryEventObject) {
-        console.log("keydown di " + event.keyCode);
         switch (event.keyCode) {
             case 87:
                 this.pressedKeys.w = true;
