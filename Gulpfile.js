@@ -4,14 +4,34 @@ var path = require('path'),
 	concat = require('gulp-concat'),
  	source = require('vinyl-source-stream'),
 	sourcemaps = require('gulp-sourcemaps'),
-	webpack = require('webpack-stream');
+	webpack = require('webpack-stream'),
+	gulpTypings = require("gulp-typings");
 
 var tsServer = ts.createProject(path.resolve('./server/tsconfig.json'));
 var tsClient = ts.createProject(path.resolve('./client/tsconfig.json'));
 
-var sourceFile = "./client/main.js",
-	destFile = "main.js",
-	destFolder = './client/';
+var clientSourceFile = "./client/main.js",
+	clientOutputFile = "main.js",
+	clientOutputDirectory = './client/script',
+	clientTypingsFile = './client/typings.json',
+	serverTypingsFile = './server/typings.json';
+
+
+gulp.task('init', ['init server', 'init client']);
+
+gulp.task('init server', function(){
+	var serverTypes = gulp.src(serverTypingsFile)
+		.pipe(gulpTypings());
+		 
+    return serverTypes; // by returning stream gulp can listen to events from the stream and knows when it is finished. 
+});
+
+gulp.task('init client', function(){
+	var serverTypes = gulp.src(clientTypingsFile)
+		.pipe(gulpTypings());
+		 
+    return serverTypes; // by returning stream gulp can listen to events from the stream and knows when it is finished. 
+})
 
 gulp.task('build', ["build_server", "webpack"]);
 
@@ -37,10 +57,10 @@ gulp.task('build_client', function () {
 });
 
 gulp.task('webpack', ['build_client'], function() {
-	return gulp.src('./client/main.js')
+	return gulp.src(clientSourceFile)
     	.pipe(webpack({
 			output: {
-        		filename: 'main.js',
+        		filename: clientOutputFile,
       		}
-		})).pipe(gulp.dest('./client/script'));
+		})).pipe(gulp.dest(clientOutputDirectory));
 }) 

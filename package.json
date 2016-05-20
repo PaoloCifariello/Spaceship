@@ -18,6 +18,8 @@
     "gulp-concat": "^2.6.0",
     "gulp-sourcemaps": "*",
     "gulp-typescript": "*",
-    "webpack-stream": "^3.2.0"
+    "webpack-stream": "^3.2.0",
+    "vinyl-source-stream": "*",
+    "gulp-typings": "*"
   }
 }
