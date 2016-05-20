@@ -9,8 +9,6 @@ export class Player extends Entity {
     private socket: SocketIO.Socket;
     private ID: string;
     private match: Match;
-    private topLimit: number;
-    private bottomLimit: number;
     private lastShoot: number = Date.now();
 
     private input: {
@@ -91,42 +89,6 @@ export class Player extends Entity {
     
     public send(message: string, data) {
         this.socket.emit(message, data);
-    }
-    
-    private goUp(delta) {
-        let limit = this.topLimit;
-        
-        if (this.position.y > limit) 
-            this.position.y -= 1 * delta;
-        if (this.position.y < limit)
-            this.position.y = limit;
-    }
-    
-    private goLeft(delta) {
-        let limit = 0;
-        
-        if (this.position.x > limit) 
-            this.position.x -= 1 * delta;
-        if (this.position.x < limit)
-            this.position.x = limit;
-    }
-    
-    private goDown(delta) {
-        let limit = this.bottomLimit;
-        
-        if (this.position.y < limit) 
-            this.position.y += 1 * delta;
-        if (this.position.y > limit)
-            this.position.y = limit;
-    }
-    
-    private goRight(delta) {
-        let limit = 1000;
-        
-        if (this.position.x < limit) 
-            this.position.x += 1 * delta;
-        if (this.position.x > limit)
-            this.position.x = limit;
     }
     
     private shoot() {
