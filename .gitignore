@@ -1,0 +1,13 @@
+server/**/*.js
+server/**/*.js.map
+server/typings
+
+client/main.js
+client/main.js.map
+client/script/*.js
+client/script/*.js.map
+client/typings
+
+node_modules
+.*
+!.gitignore
