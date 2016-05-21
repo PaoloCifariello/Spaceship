@@ -3,6 +3,7 @@ import {Entity} from './Entity';
 import {Match} from './Match';
 import {Point} from './Point';
 import {Bullet} from './Bullet';
+import {Ship} from './Ship';
 
 export class Player extends Entity {
     private game: GameServer;
@@ -27,7 +28,7 @@ export class Player extends Entity {
     
     public shoots: Bullet[] = [];
     public playerId: number;
-    public ship: string = null;
+    public ship: Ship = null;
     
     constructor(game: GameServer, socket: SocketIO.Socket) {
         super();
@@ -122,17 +123,17 @@ export class Player extends Entity {
     
     public updateSpeed() {
         if (this.input.w) {
-            this.speed.y = -1
+            this.speed.y = - this.ship.speed.y
         } else if (this.input.s) {
-            this.speed.y = 1;
+            this.speed.y = this.ship.speed.y;
         } else {
             this.speed.y = 0;
         }
         
         if (this.input.a) {
-            this.speed.x = -1;
+            this.speed.x = - this.ship.speed.x;
         } else if (this.input.d) {
-            this.speed.x = 1;
+            this.speed.x = this.ship.speed.x;
         } else {
             this.speed.x = 0;
         }

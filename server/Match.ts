@@ -2,6 +2,7 @@ import {Player} from './Player';
 import {GameServer} from './GameServer';
 import {Point} from './Point';
 import {GameConfiguration} from './config/GameConfiguration';
+import {Ship} from './Ship';
 
 export class Match {
     private player1: Player;
@@ -17,8 +18,8 @@ export class Match {
         this.player2.moveTo(GameConfiguration.PLAYER2_INITIAL_POSITION);
     }
     
-    public onShipSelect(player, data) {
-        player.ship = data.shipId;
+    public onShipSelect(player: Player, data) {
+        player.ship = new Ship(data.shipId);
         
         if (this.player1.ship !== null && this.player2.ship !== null) {
             this.start();
@@ -28,19 +29,19 @@ export class Match {
     private start() {
         this.player1.send('match start', {
             local: {
-                "shipId": this.player1.ship
+                "shipId": this.player1.ship.id
             }, 
             remote: {
-                "shipId": this.player2.ship
+                "shipId": this.player2.ship.id
             }
         });
         
         this.player2.send('match start', {
             local: {
-                shipId: this.player2.ship
+                shipId: this.player2.ship.id
             }, 
             remote: {
-                shipId: this.player1.ship
+                shipId: this.player1.ship.id
             }
         })
         

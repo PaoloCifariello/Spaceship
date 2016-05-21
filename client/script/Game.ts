@@ -84,7 +84,7 @@ export class Game {
     }
     
     public update(delta) {
-        this.clientSocket.send('input update', this.pressedKeys);
+        
     }
     
     public draw() {
@@ -118,6 +118,8 @@ export class Game {
                 this.pressedKeys.backspace = true;
                 break;
         }
+        
+        this.clientSocket.send('input update', this.pressedKeys);
     }
         
     public keyup(event: JQueryEventObject) {
@@ -138,5 +140,7 @@ export class Game {
                 this.pressedKeys.backspace = false;
                 break;
         }
+        
+        this.clientSocket.send('input update', this.pressedKeys);
     }
 }
