@@ -29,18 +29,22 @@ export class Match {
     private start() {
         this.player1.send('match start', {
             local: {
-                "shipId": this.player1.ship.id
+                playerId: this.player1.playerId,
+                shipId: this.player1.ship.id
             }, 
             remote: {
-                "shipId": this.player2.ship.id
+                playerId: this.player2.playerId,
+                shipId: this.player2.ship.id
             }
         });
         
         this.player2.send('match start', {
             local: {
+                playerId: this.player2.playerId,
                 shipId: this.player2.ship.id
             }, 
             remote: {
+                playerId: this.player1.playerId,
                 shipId: this.player1.ship.id
             }
         })
@@ -49,13 +53,7 @@ export class Match {
         setInterval(() => this.gameLoop.call(this), GameConfiguration.GAME_TIMEOUT);
     }
     
-    private gameLoop() {
-        var now = Date.now();
-        var delta = now - this.lastUpdate;
-        
-        this.player1.update(delta);
-        this.player2.update(delta);
-        
+    public sendUpdate() {
         let player1Shoots = [];
         let player2Shoots = [];
         this.player1.shoots.forEach((shoot) => {
@@ -74,10 +72,12 @@ export class Match {
         let player1Pack = {
             x: this.player1.position.x,
             y: this.player1.position.y,
+            input: this.player1.input,
             shoots: player1Shoots
         }, player2Pack = {
             x: this.player2.position.x,
             y: this.player2.position.y,
+            input: this.player2.input,
             shoots: player2Shoots 
         };
           
@@ -91,6 +91,14 @@ export class Match {
             localPlayer: player2Pack,
             remotePlayer: player1Pack
         });
+    }
+    
+    private gameLoop() {
+        var now = Date.now();
+        var delta = now - this.lastUpdate;
+        
+        this.player1.update(delta);
+        this.player2.update(delta);
         
         this.lastUpdate = now;
     }

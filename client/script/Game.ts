@@ -26,14 +26,7 @@ export class Game {
         this.renderer = new Renderer(this);
     }
     
-    private getTiming() {
-        return (new Date()).getMilliseconds();
-    }
-    
     public initialize() {
-        this.localPlayer = new Player(1);
-        this.remotePlayer = new Player(2);
-        
         this.clientSocket.initialize();
         
         $('#cerca').click(() => {
@@ -56,12 +49,13 @@ export class Game {
         this.localPlayer.position = new Point(data.localPlayer.x, data.localPlayer.y);
         this.localPlayer.shoots = data.localPlayer.shoots;
         this.remotePlayer.position = new Point(data.remotePlayer.x, data.remotePlayer.y);
+        this.remotePlayer.input = data.remotePlayer.input;
         this.remotePlayer.shoots = data.remotePlayer.shoots;
     }
     
     public start(matchData) {
-        this.localPlayer = new Player(matchData.local.shipId);
-        this.remotePlayer = new Player(matchData.remote.shipId);
+        this.localPlayer = new Player(matchData.local.playerId, matchData.local.shipId);
+        this.remotePlayer = new Player(matchData.remote.playerId, matchData.remote.shipId);
         
         this.renderer.initializeScenario();
         
@@ -69,12 +63,12 @@ export class Game {
         $(document).keydown((event) => this.keydown.call(this, event))
         $(document).keyup((event) => this.keyup.call(this, event))
         
-        this.lastTiming = this.getTiming();
+        this.lastTiming = Date.now();
         this.timerId = setInterval(() => this.gameLoop.call(this), 1);
     }
     
     public gameLoop() {
-        let actualTiming = this.getTiming();
+        let actualTiming = Date.now();
         let delta = actualTiming - this.lastTiming;
         
         this.update(delta);
@@ -84,7 +78,8 @@ export class Game {
     }
     
     public update(delta) {
-        
+        this.localPlayer.update(delta);
+        this.remotePlayer.update(delta);
     }
     
     public draw() {
@@ -103,44 +98,44 @@ export class Game {
     public keydown(event: JQueryEventObject) {
         switch (event.keyCode) {
             case 87:
-                this.pressedKeys.w = true;
+                this.localPlayer.input.w = true;
                 break;
             case 65:
-                this.pressedKeys.a = true;
+                this.localPlayer.input.a = true;
                 break;
             case 83:
-                this.pressedKeys.s = true;
+                this.localPlayer.input.s = true;
                 break;
             case 68:
-                this.pressedKeys.d = true;
+                this.localPlayer.input.d = true;
                 break;
             case 32:
-                this.pressedKeys.backspace = true;
+                this.localPlayer.input.backspace = true;
                 break;
         }
         
-        this.clientSocket.send('input update', this.pressedKeys);
+        this.clientSocket.send('input update', this.localPlayer.input);
     }
         
     public keyup(event: JQueryEventObject) {
         switch (event.keyCode) {
             case 87:
-                this.pressedKeys.w = false;
+                this.localPlayer.input.w = false;
                 break;
             case 65:
-                this.pressedKeys.a = false;
+                this.localPlayer.input.a = false;
                 break;
             case 83:
-                this.pressedKeys.s = false;
+                this.localPlayer.input.s = false;
                 break;
             case 68:
-                this.pressedKeys.d = false;
+                this.localPlayer.input.d = false;
                 break;
             case 32:
-                this.pressedKeys.backspace = false;
+                this.localPlayer.input.backspace = false;
                 break;
         }
         
-        this.clientSocket.send('input update', this.pressedKeys);
+        this.clientSocket.send('input update', this.localPlayer.input);
     }
 }

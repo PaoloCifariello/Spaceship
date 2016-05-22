@@ -12,7 +12,7 @@ export class Player extends Entity {
     private match: Match;
     private lastShoot: number = Date.now();
 
-    private input: {
+    public input: {
         w: boolean,
         a: boolean,
         s: boolean,
@@ -54,6 +54,7 @@ export class Player extends Entity {
     
     private onInputUpdate(input) {
         this.input = input;
+        this.match.sendUpdate();
     }
     
     public id(): string {

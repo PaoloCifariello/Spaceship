@@ -8,6 +8,7 @@ let ships = [
     { name: 'Solbadguy', vx: 1.25, vy: 1.5,life: 160, atk: 14, def: 5, vel: 350, ric: 400, dx: 140, dy: 76 },
     { name: 'Starship', vx: 1.6, vy: 1.5,life: 150, atk: 13, def: 5, vel: 200, ric: 300, dx: 140, dy: 76 }
 ];
+
 export class Ship {
     public id: number;
     public speed: Point;
@@ -15,7 +16,7 @@ export class Ship {
     private attack: number;
     private defense: number;
     private shootSpeed: number;
-    private shootInterval: number;
+    public shootInterval: number;
     
     constructor(shipId: number) {
         let ship = ships[shipId];
