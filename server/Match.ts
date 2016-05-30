@@ -7,7 +7,7 @@ import {Ship} from './Ship';
 export class Match {
     private player1: Player;
     private player2: Player;
-    
+    private i = 0;
     private lastUpdate: number;
     
     constructor(game: GameServer, player1: Player, player2: Player) {
@@ -80,17 +80,20 @@ export class Match {
             input: this.player2.input,
             shoots: player2Shoots 
         };
-          
-        
+      
         this.player1.send('update', {
             localPlayer: player1Pack, 
-            remotePlayer: player2Pack
+            remotePlayer: player2Pack,
+            lastUpdateId: this.player1.lastUpdateId
         });
         
         this.player2.send('update', {
             localPlayer: player2Pack,
-            remotePlayer: player1Pack
+            remotePlayer: player1Pack,
+            lastUpdateId: this.player2.lastUpdateId
         });
+        
+        console.log(new Date().getMilliseconds() + ": Game update " + this.i++);
     }
     
     private gameLoop() {

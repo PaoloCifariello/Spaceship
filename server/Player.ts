@@ -11,7 +11,7 @@ export class Player extends Entity {
     private ID: string;
     private match: Match;
     private lastShoot: number = Date.now();
-
+    
     public input: {
         w: boolean,
         a: boolean,
@@ -29,6 +29,7 @@ export class Player extends Entity {
     public shoots: Bullet[] = [];
     public playerId: number;
     public ship: Ship = null;
+    public lastUpdateId = -1;
     
     constructor(game: GameServer, socket: SocketIO.Socket) {
         super();
@@ -52,8 +53,9 @@ export class Player extends Entity {
         this.game.removePlayer(this);
     }
     
-    private onInputUpdate(input) {
-        this.input = input;
+    private onInputUpdate(data) {
+        this.lastUpdateId = data.lastUpdateId;
+        this.input = data.input;
         this.match.sendUpdate();
     }
     

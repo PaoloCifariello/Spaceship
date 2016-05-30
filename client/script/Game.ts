@@ -13,12 +13,13 @@ export class Game {
     private localPlayer: Player;
     private remotePlayer: Player;
     
-    private pressedKeys = {
-        w: false,
-        a: false,
-        s: false,
-        d: false,
-        backspace: false
+    private lastUpdateId = 0;
+    
+    private inputCharMap = {
+        87: "w",
+        65: "a",
+        83: "s",
+        32: "d",
     };
     
     constructor() {
@@ -48,6 +49,7 @@ export class Game {
     public refresh(data) {
         this.localPlayer.position = new Point(data.localPlayer.x, data.localPlayer.y);
         this.localPlayer.shoots = data.localPlayer.shoots;
+        
         this.remotePlayer.position = new Point(data.remotePlayer.x, data.remotePlayer.y);
         this.remotePlayer.input = data.remotePlayer.input;
         this.remotePlayer.shoots = data.remotePlayer.shoots;
@@ -95,47 +97,41 @@ export class Game {
         this.renderer.initializeShipChoice();
     }
     
-    public keydown(event: JQueryEventObject) {
-        switch (event.keyCode) {
-            case 87:
-                this.localPlayer.input.w = true;
-                break;
-            case 65:
-                this.localPlayer.input.a = true;
-                break;
-            case 83:
-                this.localPlayer.input.s = true;
-                break;
-            case 68:
-                this.localPlayer.input.d = true;
-                break;
-            case 32:
-                this.localPlayer.input.backspace = true;
-                break;
-        }
+    private sendUpdate() {
         
-        this.clientSocket.send('input update', this.localPlayer.input);
+        
+        this.clientSocket.send('input update', {
+            id: this.lastUpdateId++,
+            input: this.localPlayer.input,
+            lastUpdateId: this.lastUpdateId++
+        });   
+    }
+    
+    public keydown(event: JQueryEventObject) {
+        let updated = this.updateInput(event.keyCode, true);
+        
+        if (updated)
+            this.sendUpdate();            
     }
         
     public keyup(event: JQueryEventObject) {
-        switch (event.keyCode) {
-            case 87:
-                this.localPlayer.input.w = false;
-                break;
-            case 65:
-                this.localPlayer.input.a = false;
-                break;
-            case 83:
-                this.localPlayer.input.s = false;
-                break;
-            case 68:
-                this.localPlayer.input.d = false;
-                break;
-            case 32:
-                this.localPlayer.input.backspace = false;
-                break;
-        }
+        let updated = this.updateInput(event.keyCode, false);
         
-        this.clientSocket.send('input update', this.localPlayer.input);
+        if (updated)
+            this.sendUpdate();
+    }
+    
+    private updateInput(keyCode: number, value: boolean) {
+        let inputChar = String.fromCharCode(keyCode).toLowerCase();
+        
+        if (["w", "a", "s", "d"].indexOf(inputChar) == -1)
+            return false;
+            
+        if (this.localPlayer.input[inputChar] == value)
+            return false;
+        
+        this.localPlayer.input[inputChar] = value;
+        return true;
+           
     }
 }
