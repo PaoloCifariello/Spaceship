@@ -73,12 +73,12 @@ export class Player extends Entity {
         let nextShoots = [];
         this.shoots.forEach((shoot) => {
            shoot.update(delta);
-           if (shoot.isVisible()) {
-               nextShoots.push(shoot); 
-           }
+           //if (shoot.isVisible()) {
+           //    nextShoots.push(shoot); 
+           //}
         });
         
-        this.shoots = nextShoots;
+        //this.shoots = nextShoots;
     }
     
     public updateSpeed() {

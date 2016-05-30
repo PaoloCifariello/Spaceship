@@ -17,10 +17,6 @@ export class Bullet extends Entity {
         }
     }
     
-    public update(delta) {
-        this.position.y += this.speed.y * delta;
-    }
-    
     public draw() {
         
     }

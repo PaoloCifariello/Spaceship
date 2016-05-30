@@ -2,6 +2,7 @@ import {ClientSocket} from './ClientSocket';
 import {Player} from './Player';
 import {Renderer} from './Renderer';
 import {Point} from './Point';
+import {Bullet} from './Bullet';
 
 export class Game {
     private canvas: HTMLCanvasElement;
@@ -14,14 +15,7 @@ export class Game {
     private remotePlayer: Player;
     
     private lastUpdateId = 0;
-    
-    private inputCharMap = {
-        87: "w",
-        65: "a",
-        83: "s",
-        32: "d",
-    };
-    
+
     constructor() {
         this.clientSocket = new ClientSocket(this);
         this.renderer = new Renderer(this);
@@ -47,12 +41,36 @@ export class Game {
     }
     
     public refresh(data) {
+        console.log(new Date().getTime() + ": Game update");
         this.localPlayer.position = new Point(data.localPlayer.x, data.localPlayer.y);
-        this.localPlayer.shoots = data.localPlayer.shoots;
+        let shoots = [];
+        
+        data.localPlayer.shoots.forEach((shoot) => {
+            let bullet = new Bullet(this.localPlayer)
+            bullet.position.x = shoot.x;
+            bullet.position.y = shoot.y;
+            bullet.speed.x = shoot.vx;
+            bullet.speed.y = shoot.vy;
+            shoots.push(bullet);
+        });
+        
+        this.localPlayer.shoots = shoots;
         
         this.remotePlayer.position = new Point(data.remotePlayer.x, data.remotePlayer.y);
         this.remotePlayer.input = data.remotePlayer.input;
-        this.remotePlayer.shoots = data.remotePlayer.shoots;
+        
+        shoots = [];
+        
+        data.remotePlayer.shoots.forEach((shoot) => {
+            let bullet = new Bullet(this.remotePlayer)
+            bullet.position.x = shoot.x;
+            bullet.position.y = shoot.y;
+            bullet.speed.x = shoot.vx;
+            bullet.speed.y = shoot.vy;
+            shoots.push(bullet);
+        });
+        
+        this.remotePlayer.shoots = shoots;
     }
     
     public start(matchData) {
@@ -124,9 +142,11 @@ export class Game {
     private updateInput(keyCode: number, value: boolean) {
         let inputChar = String.fromCharCode(keyCode).toLowerCase();
         
-        if (["w", "a", "s", "d"].indexOf(inputChar) == -1)
+        if (["w", "a", "s", "d", " "].indexOf(inputChar) == -1)
             return false;
-            
+         
+        if (inputChar == " ") inputChar = "backspace";
+         
         if (this.localPlayer.input[inputChar] == value)
             return false;
         

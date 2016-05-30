@@ -7,7 +7,6 @@ import {Ship} from './Ship';
 export class Match {
     private player1: Player;
     private player2: Player;
-    private i = 0;
     private lastUpdate: number;
     
     constructor(game: GameServer, player1: Player, player2: Player) {
@@ -59,13 +58,17 @@ export class Match {
         this.player1.shoots.forEach((shoot) => {
            player1Shoots.push({
                x: shoot.position.x,
-               y: shoot.position.y
+               y: shoot.position.y,
+               vx: shoot.speed.x,
+               vy: shoot.speed.y
            }) 
         });
         this.player2.shoots.forEach((shoot) => {
            player2Shoots.push({
                x: shoot.position.x,
-               y: shoot.position.y
+               y: shoot.position.y,
+               vx: shoot.speed.x,
+               vy: shoot.speed.y
            }) 
         });
 
@@ -92,8 +95,6 @@ export class Match {
             remotePlayer: player1Pack,
             lastUpdateId: this.player2.lastUpdateId
         });
-        
-        console.log(new Date().getMilliseconds() + ": Game update " + this.i++);
     }
     
     private gameLoop() {

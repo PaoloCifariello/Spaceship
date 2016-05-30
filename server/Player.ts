@@ -101,6 +101,7 @@ export class Player extends Entity {
         if ((now - this.lastShoot) < 500)
             return;
 
+        console.log("Player " + this.playerId + " shot");
         this.shoots.push(new Bullet(this));
         this.lastShoot = now;
     }
@@ -115,7 +116,8 @@ export class Player extends Entity {
        
         let nextShoots = [];
         this.shoots.forEach((shoot) => {
-           shoot.update(delta);
+            shoot.update(delta);
+            
            if (shoot.isVisible()) {
                nextShoots.push(shoot); 
            }
